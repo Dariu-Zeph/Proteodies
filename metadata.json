@@ -1,0 +1,7 @@
+{
+  "name": "Proteody CV Studio",
+  "description": "Eurorack Pitch & Envelope CV generator from sound card with 5-limit Just scientific tuning (C4=256Hz), Meta-Proteodies substance polyphony (Coffee cascade with ADORA2A, RYR1, DRD2, CYP1A2), full audible spectrum Rich Octaves (20 Hz - 20,000 Hz spanning -4 to +6 octaves), live keyboard performance, Proteody protein melody engine, interactive mouse envelope designer, oscilloscope, and VCO calibrator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
