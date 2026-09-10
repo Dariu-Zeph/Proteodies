@@ -1,0 +1,13 @@
+[package]
+name = "proteodies-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "proteodies-cli"
+path = "src/main.rs"
+
+[dependencies]
+proteodies-core = { path = "../proteodies-core" }
