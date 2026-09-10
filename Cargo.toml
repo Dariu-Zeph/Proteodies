@@ -1,0 +1,14 @@
+[workspace]
+members = ["proteodies-core", "proteodies-cli"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"
+license = "TBD"
+authors = ["Proteodies contributors"]
+repository = "https://github.com/dariu000/Proteodies"
+
+[profile.release]
+lto = true
+codegen-units = 1
