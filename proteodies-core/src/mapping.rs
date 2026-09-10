@@ -62,9 +62,10 @@ impl Pitch {
 /// The algorithm used to derive pitch from a residue. Chosen once at map
 /// construction; immutable thereafter. Matches the prototype's `algorithm`
 /// field (`docs/PROTOTYPE.md` §4).
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Hash)]
 pub enum Algorithm {
     /// Mass → Sternheimer audible Hz → snap to 5-limit Just. (Default.)
+    #[default]
     SternheimerMass5Just,
     /// Mass → Sternheimer audible Hz, unquantized microtonal.
     SternheimerMassContinuous,
@@ -74,12 +75,6 @@ pub enum Algorithm {
     MolecularWeight,
     /// 7-tone diatonic distribution keyed to Kyte-Doolittle hydropathy.
     Hydropathy,
-}
-
-impl Default for Algorithm {
-    fn default() -> Self {
-        Algorithm::SternheimerMass5Just
-    }
 }
 
 /// Options for building a resonance map. All fields are fixed at construction.

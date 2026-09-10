@@ -231,11 +231,11 @@ impl Sequence {
             if line.is_empty() {
                 continue;
             }
-            if line.starts_with('>') {
+            if let Some(rest) = line.strip_prefix('>') {
                 if header.is_some() {
                     break;
                 }
-                header = Some(line[1..].trim().to_string());
+                header = Some(rest.trim().to_string());
                 continue;
             }
             seq_body.push_str(line.trim());

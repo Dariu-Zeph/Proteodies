@@ -37,6 +37,7 @@ pub struct TimedEvent {
 /// produce a gate-off. When `apply_structure_gates` is true, each residue's
 /// gate-length is modulated by its predicted secondary structure — a non-pitch
 /// rhythm axis (`structure.rs`).
+#[allow(clippy::too_many_arguments)]
 pub fn render(
     map: &ResonanceMap,
     seq: &Sequence,

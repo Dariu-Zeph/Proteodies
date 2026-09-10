@@ -4,7 +4,6 @@
 //! driver.
 
 use crate::sequencer::TimedEvent;
-use crate::tuning::BASE_HZ;
 
 /// Something that consumes timed events.
 pub trait Sink {
@@ -118,6 +117,3 @@ mod tests {
         assert_eq!(sink.notes, vec![(0.0, 60, 0)]);
     }
 }
-
-// Keep BASE_HZ referenced for the module doc linkage.
-const _: f64 = BASE_HZ;

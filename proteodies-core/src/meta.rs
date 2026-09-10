@@ -79,6 +79,7 @@ pub struct MetaLayer {
 impl MetaLayer {
     /// Build a layer from a raw sequence string, using the stage defaults for
     /// onset and half-life.
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         protein_id: impl Into<String>,
         protein_name: impl Into<String>,
