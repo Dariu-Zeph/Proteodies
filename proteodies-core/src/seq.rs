@@ -90,31 +90,94 @@ impl AminoAcid {
         })
     }
 
-    /// Kyte-Doolittle hydropathy index. Higher = more hydrophobic.
-    pub fn hydropathy(self) -> i32 {
-        match self {
-            AminoAcid::Ile => 45,
-            AminoAcid::Val => 42,
-            AminoAcid::Leu => 37,
-            AminoAcid::Phe => 28,
-            AminoAcid::Cys => 25,
-            AminoAcid::Met => 16,
-            AminoAcid::Ala => 18,
-            AminoAcid::Gly => -8,
-            AminoAcid::Thr => -13,
-            AminoAcid::Ser => -30,
-            AminoAcid::Trp => -9,
-            AminoAcid::Tyr => -14,
-            AminoAcid::Pro => -46,
-            AminoAcid::His => -42,
-            AminoAcid::Glu => -55,
-            AminoAcid::Gln => -35,
-            AminoAcid::Asp => -54,
-            AminoAcid::Asn => -28,
-            AminoAcid::Lys => -52,
-            AminoAcid::Arg => -25,
-            AminoAcid::Gap => 0,
-        }
+    /// Molecular weight in Daltons (Da), matching the prototype's
+    /// `AMINO_ACIDS` table (`docs/PROTOTYPE.md` §3).
+    pub fn molecular_weight_da(self) -> Option<f64> {
+        use crate::tuning::mass_to_audible_hz;
+        let mw = match self {
+            AminoAcid::Gly => 75.07,
+            AminoAcid::Ala => 89.09,
+            AminoAcid::Ser => 105.09,
+            AminoAcid::Pro => 115.13,
+            AminoAcid::Val => 117.15,
+            AminoAcid::Thr => 119.12,
+            AminoAcid::Cys => 121.16,
+            AminoAcid::Ile | AminoAcid::Leu => 131.18,
+            AminoAcid::Asn => 132.12,
+            AminoAcid::Asp => 133.10,
+            AminoAcid::Gln => 146.15,
+            AminoAcid::Lys => 146.19,
+            AminoAcid::Glu => 147.13,
+            AminoAcid::Met => 149.21,
+            AminoAcid::His => 155.16,
+            AminoAcid::Phe => 165.19,
+            AminoAcid::Arg => 174.20,
+            AminoAcid::Tyr => 181.19,
+            AminoAcid::Trp => 204.23,
+            AminoAcid::Gap => return None,
+        };
+        // Silence unused-import lint when this fn is inlined; mass_to_audible_hz
+        // is exercised elsewhere, but keep the link live for clarity.
+        let _ = mass_to_audible_hz;
+        Some(mw)
+    }
+
+    /// Sternheimer audible frequency (Hz) via the 2^76 octave reduction of the
+    /// de Broglie frequency. `None` for `Gap`.
+    pub fn sternheimer_audible_hz(self) -> Option<f64> {
+        self.molecular_weight_da()
+            .map(crate::tuning::mass_to_audible_hz)
+    }
+
+    /// Kyte-Doolittle hydropathy index on the standard float scale (higher =
+    /// more hydrophobic), matching the prototype's table.
+    pub fn hydropathy(self) -> Option<f64> {
+        use AminoAcid::*;
+        Some(match self {
+            Ile => 4.5,
+            Val => 4.2,
+            Leu => 3.8,
+            Phe => 2.8,
+            Cys => 2.5,
+            Met => 1.9,
+            Ala => 1.8,
+            Gly => -0.4,
+            Thr => -0.7,
+            Ser => -0.8,
+            Trp => -0.9,
+            Tyr => -1.3,
+            Pro => -1.6,
+            His => -3.2,
+            Gln | Asn | Asp | Glu => -3.5,
+            Lys => -3.9,
+            Arg => -4.5,
+            Gap => return None,
+        })
+    }
+
+    /// Canonical Sternheimer default note symbol (for the
+    /// `sternheimer_canonical` algorithm), matching the prototype.
+    pub fn sternheimer_default_note(self) -> Option<&'static str> {
+        use AminoAcid::*;
+        Some(match self {
+            Gly => "C",  Ala => "D",  Ser => "E",  Pro => "F",
+            Val => "G",  Thr => "A",  Cys => "B",  Ile => "C",
+            Leu => "D",  Asn => "Eb", Asp => "E",  Gln => "F",
+            Lys => "F#", Glu => "G",  Met => "Ab", His => "A",
+            Phe => "Bb", Arg => "B",  Tyr => "C",  Trp => "E",
+            Gap => return None,
+        })
+    }
+
+    /// Canonical Sternheimer default octave (for `sternheimer_canonical`).
+    pub fn sternheimer_default_octave(self) -> Option<i32> {
+        use AminoAcid::*;
+        Some(match self {
+            Gly | Ala | Ser | Pro | Val | Thr | Cys => 3,
+            Ile | Leu | Asn | Asp | Gln | Lys | Glu | Met | His | Phe | Arg => 4,
+            Tyr | Trp => 5,
+            Gap => return None,
+        })
     }
 }
 

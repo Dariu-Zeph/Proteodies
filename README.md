@@ -67,14 +67,26 @@ proteodies-core   pure, headless core (resonance invariant, JI, CV, sequencer)
 proteodies-cli     headless smoke: FASTA -> timed events
 ARCHITECTURE.md    layer design and why the resonance invariant is a type
 ROADMAP.md         milestone plan
+docs/PROTOTYPE.md  reference spec for the Dariu-Zeph/Proteodies TS prototype
 ```
+
+The core is reconciled to the working `Dariu-Zeph/Proteodies` prototype (React
++ Web Audio): it ports the prototype's proven pure logic — Sternheimer
+mass→sound mapping, the 12-interval 5-limit JI table, the five mapping
+algorithms, secondary-structure articulation, and the Meta-Proteody + PK
+cascade data model — while keeping pitch immutable. The prototype stays the
+live-playable front-end; this core is the authoritative truth layer.
 
 ## Build & test
 
 ```
 cargo test
-cargo run --release --bin proteodies-cli -- examples/insulin.fasta
+cargo run --release --bin proteodies-cli -- examples/insulin.fasta 240
 ```
+
+The CLI prints timed CV events using the Sternheimer mass→5-limit-Just
+algorithm at C2 = 0V, plus a StructureGate CV derived from each residue's
+predicted secondary structure (α-helix 0.70, β-sheet 0.95, loop/coil 1.30).
 
 ## License
 

@@ -48,15 +48,18 @@ fn main() -> ExitCode {
     println!("# pitch is fixed (immutable); aesthetic = volume/envelope/harmonics/rhythm");
     println!();
 
-    let map = ResonanceMap::from_sequence(&seq);
+    let map = ResonanceMap::from_sequence(&seq, proteodies_core::mapping::BuildOptions::default());
+    println!("# algorithm: {:?}", map.algorithm());
     let aesthetic = Aesthetic::neutral(seq.len());
     let events = render(
         &map,
+        &seq,
         &aesthetic,
         Tempo(bpm),
         Calibration::UNCALIBRATED,
         DEFAULT_CLAMP_LO,
         DEFAULT_CLAMP_HI,
+        true,
     );
 
     let mut sink = PrintSink::new(std::io::stdout());

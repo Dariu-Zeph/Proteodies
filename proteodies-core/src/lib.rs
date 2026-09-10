@@ -9,7 +9,10 @@
 pub mod aesthetic;
 pub mod cv;
 pub mod mapping;
+pub mod meta;
+pub mod midi;
 pub mod output;
 pub mod seq;
 pub mod sequencer;
+pub mod structure;
 pub mod tuning;

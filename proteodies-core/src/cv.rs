@@ -18,6 +18,7 @@ pub enum Channel {
     Pitch,
     Gate,
     Volume,
+    StructureGate,
     EnvelopeAttack,
     EnvelopeDecay,
     EnvelopeSustain,
